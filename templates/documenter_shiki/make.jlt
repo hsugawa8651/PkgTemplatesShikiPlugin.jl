@@ -1,0 +1,28 @@
+using Documenter
+include("./ShikiHighlighter.jl")
+using .ShikiHighlighter
+
+makedocs(;
+    modules=[{{{PKG}}}],
+    format=shiki_html(
+        theme="{{{SHIKI_THEME}}}",
+        dark_theme="{{{SHIKI_DARK_THEME}}}",
+        languages={{{SHIKI_LANGUAGES}}},
+        cdn_url="{{{SHIKI_CDN_URL}}}"
+    ),
+    sitename="{{{PKG}}}",
+    pages=[
+        "Home" => "index.md",
+    ],
+    {{{CANONICAL_URL}}}
+    {{{EDIT_LINK}}}
+    {{{MAKEDOCS_KWARGS}}}
+)
+
+{{#HAS_DEPLOY}}
+deploydocs(;
+    repo="{{{REPO}}}",
+    devbranch="{{{DEVBRANCH}}}",
+    push_preview=true
+)
+{{/HAS_DEPLOY}}
