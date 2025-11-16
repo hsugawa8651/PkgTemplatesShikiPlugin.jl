@@ -71,7 +71,7 @@ t("MyPackage")
 
 ## Requirements
 
-- Julia 1.6 or later
+- Julia 1.7 or later
 - PkgTemplates 0.7 or later
 - Node.js 18+ (for building documentation)
 - pnpm or npm (for Shiki dependencies)
