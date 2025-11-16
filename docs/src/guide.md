@@ -103,3 +103,14 @@ pnpm install
 # Build documentation
 julia --project=docs docs/make.jl
 ```
+
+## Live Examples
+
+To see Shiki syntax highlighting in action with various themes and languages, visit the [DocumenterShikiDemo](https://hsugawa8651.github.io/DocumenterShikiDemo/) showcase.
+
+The demo includes:
+- Interactive theme switching
+- Copy-to-clipboard functionality
+- Real-world code examples
+
+This demo site was itself generated using PkgTemplatesShikiPlugin!
