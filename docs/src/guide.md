@@ -113,4 +113,4 @@ The demo includes:
 - Copy-to-clipboard functionality
 - Real-world code examples
 
-This demo site was itself generated using PkgTemplatesShikiPlugin!
+This demo site was itself generated using PkgTemplatesShikiPlugin! See [GENERATION.md](https://github.com/hsugawa8651/DocumenterShikiDemo.jl/blob/main/GENERATION.md) for the exact template command used to generate the package skeleton.
