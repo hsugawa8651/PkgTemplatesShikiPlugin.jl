@@ -6,7 +6,7 @@ makedocs(;
     sitename="PkgTemplatesShikiPlugin.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://[USERNAME].github.io/PkgTemplatesShikiPlugin.jl",
+        canonical="https://hsugawa8651.github.io/PkgTemplatesShikiPlugin.jl",
         assets=String[],
     ),
     pages=[
@@ -17,6 +17,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/[USERNAME]/PkgTemplatesShikiPlugin.jl.git",
+    repo="github.com/hsugawa8651/PkgTemplatesShikiPlugin.jl.git",
     devbranch="main",
 )

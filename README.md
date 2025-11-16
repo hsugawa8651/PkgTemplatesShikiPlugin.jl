@@ -2,11 +2,11 @@
 
 *A PkgTemplates plugin for DocumenterShiki - bringing modern Shiki syntax highlighting to Julia package documentation*
 
-[![Build Status](https://github.com/[USERNAME]/PkgTemplatesShikiPlugin.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/[USERNAME]/PkgTemplatesShikiPlugin.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/hsugawa8651/PkgTemplatesShikiPlugin.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/hsugawa8651/PkgTemplatesShikiPlugin.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 ## Overview
 
-PkgTemplatesShikiPlugin is the **first standalone third-party plugin** for [PkgTemplates.jl](https://github.com/JuliaCI/PkgTemplates.jl). It extends PkgTemplates with support for [DocumenterShiki](https://github.com/[USERNAME]/DocumenterShiki), enabling VS Code-quality syntax highlighting powered by [Shiki](https://shiki.matsu.io/) in your package documentation.
+PkgTemplatesShikiPlugin is the **first standalone third-party plugin** for [PkgTemplates.jl](https://github.com/JuliaCI/PkgTemplates.jl). It extends PkgTemplates with support for [DocumenterShiki](https://github.com/hsugawa8651/DocumenterShiki), enabling VS Code-quality syntax highlighting powered by [Shiki](https://shiki.matsu.io/) in your package documentation.
 
 When you generate a new Julia package with this plugin, it automatically sets up DocumenterShiki with:
 - Modern Shiki syntax highlighting
