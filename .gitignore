@@ -16,6 +16,7 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+.claude/
 
 # Node.js (for documentation build)
 node_modules/
