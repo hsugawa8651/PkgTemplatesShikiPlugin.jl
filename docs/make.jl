@@ -10,7 +10,8 @@ makedocs(;
         assets=String[],
     ),
     pages=[
-        "API Reference" => "index.md",
+        "Home" => "index.md",
+        "User Guide" => "guide.md",
     ],
     remotes=nothing,  # Disable remote links for local builds without Git remote
     checkdocs=:none,  # Don't check for missing docstrings (minimal docs strategy)
