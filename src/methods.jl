@@ -1,7 +1,7 @@
 # Plugin interface methods for DocumenterShiki
 
-using PkgTemplates: Template, Plugin, hasplugin, Badge
-import PkgTemplates: validate, hook, view, badges
+using PkgTemplates: Template, Plugin, hasplugin, Badge, DEFAULT_PRIORITY
+import PkgTemplates: validate, hook, view, badges, priority
 
 # Import additional PkgTemplates types for validation
 using PkgTemplates: GitHubActions, TravisCI, GitLabCI, Documenter
@@ -18,17 +18,19 @@ because we need to extend them with new methods for DocumenterShiki.
 ## Plugin Interface Methods
 
 """
-    validate(p::DocumenterShiki{T}, t::Template) where T
+    validate(p::DocumenterShiki, t::Template)
 
-Validate DocumenterShiki plugin configuration.
+Base validation for all DocumenterShiki configurations.
 
 Checks:
 1. No conflict with standard Documenter plugin
-2. Required CI plugin present for deployment types
-3. Asset files exist
-4. Logo files exist
+2. Asset files exist
+3. Logo files exist
+
+Adapted from PkgTemplates Documenter plugin.
+Source: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L167-L177
 """
-function validate(p::DocumenterShiki{T}, t::Template) where T
+function validate(p::DocumenterShiki, t::Template)
     # Check for conflicting Documenter plugin
     if hasplugin(t, Documenter)
         throw(ArgumentError("""
@@ -38,30 +40,6 @@ function validate(p::DocumenterShiki{T}, t::Template) where T
             - Use Documenter{T}() for standard Documenter.jl with highlight.js
             - Use DocumenterShiki{T}() for Documenter.jl with Shiki highlighting
             """))
-    end
-
-    # Validate deployment configuration
-    if T === GitHubActions
-        if !hasplugin(t, GitHubActions)
-            throw(ArgumentError("""
-                DocumenterShiki{GitHubActions} requires GitHubActions plugin.
-                Either add GitHubActions() to plugins, or use DocumenterShiki() for local docs only.
-                """))
-        end
-    elseif T === TravisCI
-        if !hasplugin(t, TravisCI)
-            throw(ArgumentError("""
-                DocumenterShiki{TravisCI} requires TravisCI plugin.
-                Either add TravisCI() to plugins, or use DocumenterShiki() for local docs only.
-                """))
-        end
-    elseif T === GitLabCI
-        if !hasplugin(t, GitLabCI)
-            throw(ArgumentError("""
-                DocumenterShiki{GitLabCI} requires GitLabCI plugin.
-                Either add GitLabCI() to plugins, or use DocumenterShiki() for local docs only.
-                """))
-        end
     end
 
     # Validate assets exist
@@ -78,18 +56,43 @@ function validate(p::DocumenterShiki{T}, t::Template) where T
     end
 end
 
+# Type union for deployment CI providers (mirroring PkgTemplates pattern)
+const YesDeploy = Union{GitHubActions, TravisCI, GitLabCI}
+
+"""
+    validate(p::DocumenterShiki{T}, t::Template) where T <: YesDeploy
+
+Additional validation for DocumenterShiki with deployment.
+
+Checks that the required CI plugin is present in the template.
+
+Adapted from PkgTemplates Documenter plugin.
+Source: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L179-L186
+"""
+function validate(p::DocumenterShiki{T}, t::Template) where T <: YesDeploy
+    # Call base validation first
+    invoke(validate, Tuple{DocumenterShiki, Template}, p, t)
+
+    # Check for required CI plugin
+    if !hasplugin(t, T)
+        name = nameof(T)
+        throw(ArgumentError("DocumenterShiki: The $name plugin must be included for docs deployment to be set up"))
+    end
+end
+
 """
     view(p::DocumenterShiki{T}, t::Template, pkg::AbstractString) where T
 
 Generate template variables for rendering.
 """
 function view(p::DocumenterShiki{T}, t::Template, pkg::AbstractString) where T
+    devbranch = p.devbranch === nothing ? PkgTemplates.default_branch(t) : p.devbranch
     Dict{String, Any}(
         # Standard variables
         "PKG" => pkg,
         "AUTHORS" => join(t.authors, ", "),
         "REPO" => string(t.host, "/", t.user, "/", pkg, ".jl"),
-        "DEVBRANCH" => something(p.devbranch, t.branch),
+        "DEVBRANCH" => devbranch,
 
         # Shiki-specific
         "SHIKI_THEME" => p.theme,
@@ -160,12 +163,21 @@ function badges(::DocumenterShiki{GitLabCI})
 end
 
 """
+    priority(::DocumenterShiki, ::Function)
+
+Set hook priority to run after SrcDir plugin creates source files.
+
+Reference: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L120
+"""
+priority(::DocumenterShiki, ::Function) = DEFAULT_PRIORITY - 1  # We need SrcDir to go first.
+
+"""
     hook(p::DocumenterShiki{T}, t::Template, pkg_dir) where T
 
 Main file generation hook. Creates documentation directory structure and generates
 all necessary files for DocumenterShiki.
 """
-function hook(p::DocumenterShiki{T}, t::Template, pkg_dir) where T
+function hook(p::DocumenterShiki{T}, t::Template, pkg_dir::AbstractString) where T
     pkg = pkg_name(pkg_dir)
 
     # Directory structure
@@ -204,18 +216,20 @@ function hook(p::DocumenterShiki{T}, t::Template, pkg_dir) where T
     end
 
     # Copy logos
-    if p.logo.light !== nothing
-        cp(p.logo.light, joinpath(assets_dir, "logo.png"))
-    end
-    if p.logo.dark !== nothing
-        cp(p.logo.dark, joinpath(assets_dir, "logo-dark.png"))
+    foreach((:light => "logo", :dark => "logo-dark")) do (k, f)
+        logo = getfield(p.logo, k)
+        if logo !== nothing
+            _, ext = splitext(logo)
+            cp(logo, joinpath(assets_dir, "$f$ext"))
+        end
     end
 
     # Setup docs environment
-    Pkg.activate(docs_dir)
-    Pkg.add("Documenter")
-    Pkg.develop(PackageSpec(path=pkg_dir))
-    Pkg.activate()  # Return to original environment
+    # Reference: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L212-L216
+    PkgTemplates.with_project(docs_dir) do
+        Pkg.add("Documenter")
+        cd(() -> Pkg.develop(PackageSpec(; path="..")), docs_dir)
+    end
 end
 
 ## Helper Functions for File Generation

@@ -5,6 +5,10 @@
 # Import functions we need to extend
 import PkgTemplates: defaultkw
 
+# Template directory for this package
+template_dir() = joinpath(dirname(dirname(@__FILE__)), "templates")
+template_file(paths...) = joinpath(template_dir(), paths...)
+
 """
     DocumenterShiki{T}(;
         theme="github-light",
@@ -99,9 +103,9 @@ function DocumenterShiki{T}(;
     canonical_url::Union{Function, Nothing}=make_canonical(T),
     devbranch::Union{AbstractString, Nothing}=nothing,
     edit_link::Union{AbstractString, Symbol, Nothing}=:commit,
-    make_jl::AbstractString=default_file("documenter_shiki", "make.jlt"),
-    index_md::AbstractString=default_file("documenter_shiki", "index.md"),
-    shiki_highlighter_jl::AbstractString=default_file("documenter_shiki", "ShikiHighlighter.jlt"),
+    make_jl::AbstractString=template_file("documenter_shiki", "make.jlt"),
+    index_md::AbstractString=template_file("documenter_shiki", "index.md"),
+    shiki_highlighter_jl::AbstractString=template_file("documenter_shiki", "ShikiHighlighter.jlt"),
 ) where {T}
     return DocumenterShiki{T}(
         theme,
@@ -138,3 +142,6 @@ defaultkw(::Type{<:DocumenterShiki}, ::Val{:logo}) = Logo()
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:makedocs_kwargs}) = Dict{Symbol, Any}()
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:devbranch}) = nothing
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:edit_link}) = :commit
+defaultkw(::Type{<:DocumenterShiki}, ::Val{:make_jl}) = template_file("documenter_shiki", "make.jlt")
+defaultkw(::Type{<:DocumenterShiki}, ::Val{:index_md}) = template_file("documenter_shiki", "index.md")
+defaultkw(::Type{<:DocumenterShiki}, ::Val{:shiki_highlighter_jl}) = template_file("documenter_shiki", "ShikiHighlighter.jlt")
