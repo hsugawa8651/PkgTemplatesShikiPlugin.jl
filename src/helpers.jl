@@ -2,18 +2,6 @@
 # Copyright (c) PkgTemplates.jl contributors
 # Used under MIT License
 
-using PkgTemplates: @with_kw_noshow
-
-"""
-    Logo
-
-Logo configuration for documentation.
-"""
-@with_kw_noshow struct Logo
-    light::Union{String, Nothing} = nothing
-    dark::Union{String, Nothing} = nothing
-end
-
 """
     canonical_url_string(p::DocumenterShiki, t::Template, pkg::AbstractString)
 
