@@ -1,0 +1,13 @@
+{
+  "name": "documenter-shiki",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "shiki": "^1.22.2"
+  },
+  "scripts": {
+    "build-shiki": "node build-shiki.js",
+    "build-docs": "julia --project=docs docs/make.jl"
+  }
+}

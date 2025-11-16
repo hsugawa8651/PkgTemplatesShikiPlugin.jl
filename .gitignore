@@ -21,4 +21,3 @@ Thumbs.db
 # Node.js (for documentation build)
 node_modules/
 package-lock.json
-pnpm-lock.yaml
