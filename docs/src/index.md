@@ -60,7 +60,6 @@ This creates a new Julia package with DocumenterShiki documentation pre-configur
 ```@docs
 DocumenterShiki
 Logo
-NoDeploy
 ```
 
 ## Index
