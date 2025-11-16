@@ -1,7 +1,7 @@
 # Plugin interface methods for DocumenterShiki
 
 using PkgTemplates: Template, Plugin, hasplugin, Badge, DEFAULT_PRIORITY
-import PkgTemplates: validate, hook, view, badges, priority
+import PkgTemplates: validate, hook, view, badges, priority, gitignore
 
 # Import additional PkgTemplates types for validation
 using PkgTemplates: GitHubActions, TravisCI, GitLabCI, Documenter
@@ -161,6 +161,24 @@ function badges(::DocumenterShiki{GitLabCI})
         "https://{{{USER}}}.gitlab.io/{{{PKG}}}.jl/dev",
     )
 end
+
+"""
+    gitignore(::DocumenterShiki)
+
+Return patterns that should be added to `.gitignore` for DocumenterShiki projects.
+
+Includes standard Documenter entries plus Node.js dependencies for Shiki.
+
+Adapted from PkgTemplates Documenter plugin.
+Source: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L119
+"""
+gitignore(::DocumenterShiki) = [
+    "/docs/build/",
+    "/docs/Manifest*.toml",
+    "node_modules/",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+]
 
 """
     priority(::DocumenterShiki, ::Function)
