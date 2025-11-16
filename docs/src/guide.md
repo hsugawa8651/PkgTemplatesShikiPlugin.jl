@@ -7,66 +7,15 @@
 For local documentation only:
 
 ```julia
+using PkgTemplates
+using PkgTemplatesShikiPlugin
+
 t = Template(;
     user="YourUsername",
     plugins=[DocumenterShiki()]  # Defaults to NoDeploy
 )
-```
 
-### With GitHub Actions Deployment
-
-```julia
-t = Template(;
-    user="YourUsername",
-    plugins=[
-        GitHubActions(),
-        DocumenterShiki{GitHubActions}(
-            theme="catppuccin-mocha",
-            dark_theme="catppuccin-latte"
-        ),
-    ]
-)
-```
-
-### Custom Theme and Languages
-
-```julia
-t = Template(;
-    user="YourUsername",
-    plugins=[
-        GitHubActions(),
-        DocumenterShiki{GitHubActions}(
-            theme="nord",
-            dark_theme="dracula",
-            languages=["julia", "python", "rust", "toml"],
-            cdn_url="https://esm.sh"
-        ),
-    ]
-)
-```
-
-### With Travis CI
-
-```julia
-t = Template(;
-    user="YourUsername",
-    plugins=[
-        TravisCI(),
-        DocumenterShiki{TravisCI}(),
-    ]
-)
-```
-
-### With GitLab CI
-
-```julia
-t = Template(;
-    user="YourUsername",
-    plugins=[
-        GitLabCI(),
-        DocumenterShiki{GitLabCI}(),
-    ]
-)
+t("MyPackage")
 ```
 
 ## Configuration Options
@@ -89,12 +38,24 @@ See [available Shiki themes](https://shiki.matsu.io/themes) for theme options.
 
 DocumenterShiki supports the same deployment types as the standard Documenter plugin:
 
-- `DocumenterShiki()` or `DocumenterShiki{NoDeploy}()`: Local documentation only
-- `DocumenterShiki{GitHubActions}()`: Deploy to GitHub Pages via GitHub Actions
-- `DocumenterShiki{TravisCI}()`: Deploy to GitHub Pages via Travis CI
-- `DocumenterShiki{GitLabCI}()`: Deploy to GitLab Pages via GitLab CI
+- `DocumenterShiki()` or `DocumenterShiki{NoDeploy}()`: Local documentation only ✅ *Tested*
+- `DocumenterShiki{GitHubActions}()`: Deploy to GitHub Pages via GitHub Actions *Supported*
+- `DocumenterShiki{TravisCI}()`: Deploy to GitHub Pages via Travis CI *Supported*
+- `DocumenterShiki{GitLabCI}()`: Deploy to GitLab Pages via GitLab CI *Supported*
 
 **Note**: When using deployment types other than `NoDeploy`, you must include the corresponding CI plugin in your template.
+
+**Example** (NoDeploy - tested):
+```julia
+using PkgTemplates
+using PkgTemplatesShikiPlugin
+
+t = Template(;
+    user="YourUsername",
+    plugins=[DocumenterShiki()]
+)
+t("MyPackage")
+```
 
 ## Comparison with Standard Documenter
 
