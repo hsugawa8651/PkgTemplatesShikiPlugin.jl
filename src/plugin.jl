@@ -1,3 +1,7 @@
+# Plugin struct definition following PkgTemplates Documenter{T} pattern
+# Reference: https://github.com/JuliaCI/PkgTemplates.jl/blob/v0.7.56/src/plugins/documenter.jl#L74-L113
+# Note: Cannot use @plugin macro because it doesn't support parametric types
+
 # Import functions we need to extend
 import PkgTemplates: defaultkw
 
