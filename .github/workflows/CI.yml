@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '1.7'    # Minimum supported version (ARM64 macOS support)
+          - '1.8'    # Minimum supported version (native ARM64 macOS support)
           - '1'      # Latest stable release
           - 'nightly'
         os:
