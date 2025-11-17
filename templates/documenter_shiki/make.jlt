@@ -1,4 +1,5 @@
 using Documenter
+using {{{PKG}}}
 include("./ShikiHighlighter.jl")
 using .ShikiHighlighter
 
@@ -8,14 +9,14 @@ makedocs(;
         theme="{{{SHIKI_THEME}}}",
         dark_theme="{{{SHIKI_DARK_THEME}}}",
         languages={{{SHIKI_LANGUAGES}}},
-        cdn_url="{{{SHIKI_CDN_URL}}}"
+        cdn_url="{{{SHIKI_CDN_URL}}}",
+        {{{CANONICAL_URL}}}
+        {{{EDIT_LINK}}}
     ),
     sitename="{{{PKG}}}",
     pages=[
         "Home" => "index.md",
     ],
-    {{{CANONICAL_URL}}}
-    {{{EDIT_LINK}}}
     {{{MAKEDOCS_KWARGS}}}
 )
 
