@@ -90,6 +90,7 @@ function view(p::DocumenterShiki{T}, t::Template, pkg::AbstractString) where T
     Dict{String, Any}(
         # Standard variables
         "PKG" => pkg,
+        "USER" => t.user,  # Add USER for badge URLs
         "AUTHORS" => join(t.authors, ", "),
         "REPO" => string(t.host, "/", t.user, "/", pkg, ".jl"),
         "DEVBRANCH" => devbranch,
