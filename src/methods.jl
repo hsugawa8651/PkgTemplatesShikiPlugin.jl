@@ -180,7 +180,6 @@ gitignore(::DocumenterShiki) = [
     "/docs/Manifest*.toml",
     "node_modules/",
     "package-lock.json",
-    "pnpm-lock.yaml",
     ".DS_Store",
     "Thumbs.db",
 ]
