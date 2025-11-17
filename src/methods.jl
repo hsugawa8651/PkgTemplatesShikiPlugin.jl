@@ -225,6 +225,14 @@ function hook(p::DocumenterShiki{T}, t::Template, pkg_dir::AbstractString) where
     index_text = render_file(p.index_md, vars, tags(p))
     gen_file(joinpath(src_dir, "index.md"), index_text)
 
+    # Generate Documentation.yml if deploying with GitHubActions
+    if p.documentation_yml !== nothing
+        workflows_dir = joinpath(pkg_dir, ".github", "workflows")
+        mkpath(workflows_dir)
+        doc_yml_text = render_file(p.documentation_yml, vars, tags(p))
+        gen_file(joinpath(workflows_dir, "Documentation.yml"), doc_yml_text)
+    end
+
     # Generate package.json
     pkg_json = generate_package_json(p)
     gen_file(joinpath(pkg_dir, "package.json"), pkg_json)

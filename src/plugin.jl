@@ -85,6 +85,7 @@ struct DocumenterShiki{T} <: Plugin
     make_jl::String
     index_md::String
     shiki_highlighter_jl::String
+    documentation_yml::Union{String, Nothing}
 
     # Deployment settings
     devbranch::Union{String, Nothing}
@@ -106,6 +107,7 @@ function DocumenterShiki{T}(;
     make_jl::AbstractString=template_file("documenter_shiki", "make.jlt"),
     index_md::AbstractString=template_file("documenter_shiki", "index.md"),
     shiki_highlighter_jl::AbstractString=template_file("documenter_shiki", "ShikiHighlighter.jlt"),
+    documentation_yml::Union{AbstractString, Nothing}=T === GitHubActions ? template_file("documenter_shiki", "workflows", "Documentation.yml.jlt") : nothing,
 ) where {T}
     return DocumenterShiki{T}(
         theme,
@@ -119,6 +121,7 @@ function DocumenterShiki{T}(;
         make_jl,
         index_md,
         shiki_highlighter_jl,
+        documentation_yml,
         devbranch,
         edit_link,
     )
@@ -145,3 +148,5 @@ defaultkw(::Type{<:DocumenterShiki}, ::Val{:edit_link}) = :commit
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:make_jl}) = template_file("documenter_shiki", "make.jlt")
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:index_md}) = template_file("documenter_shiki", "index.md")
 defaultkw(::Type{<:DocumenterShiki}, ::Val{:shiki_highlighter_jl}) = template_file("documenter_shiki", "ShikiHighlighter.jlt")
+defaultkw(::Type{DocumenterShiki{GitHubActions}}, ::Val{:documentation_yml}) = template_file("documenter_shiki", "workflows", "Documentation.yml.jlt")
+defaultkw(::Type{<:DocumenterShiki}, ::Val{:documentation_yml}) = nothing
