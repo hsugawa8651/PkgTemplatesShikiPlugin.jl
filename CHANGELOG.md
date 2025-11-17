@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2025-11-16
+## [0.1.0] - 2025-11-17
 
 ### Added
 - Initial release
@@ -32,13 +32,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - docs/ShikiHighlighter.jl module
   - package.json with Shiki dependencies
   - build-shiki.js script
+  - .github/workflows/Documentation.yml for GitHubActions deployment
 - Plugin interface methods:
   - `validate()` - Configuration validation
-  - `view()` - Template variable generation
+  - `view()` - Template variable generation with USER variable for badge URLs
   - `hook()` - File generation
-  - `badges()` - README badge generation
+  - `badges()` - README badge generation with correct GitHub Pages URLs
   - `priority()` - Hook execution ordering
 - Documentation:
   - Comprehensive README with usage examples
   - CHANGELOG following Keep a Changelog format
   - API documentation from docstrings
+  - Shiki syntax highlighting in documentation site
+- SSH Deploy Key support via DOCUMENTER_KEY for secure documentation deployment
+
+### Fixed
+- Missing `add_shiki_assets()` call in generated docs/make.jl template
+- Incorrect placement of `canonical` and `edit_link` arguments (moved to shiki_html())
+- Missing USER variable in view() causing broken badge URLs in generated README
+- Incorrect gitignore pattern for pnpm-lock.yaml (should not be ignored)
+- GitHub Actions syntax escaping in Documentation.yml template
