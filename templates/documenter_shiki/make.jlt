@@ -19,6 +19,9 @@ makedocs(;
     {{{MAKEDOCS_KWARGS}}}
 )
 
+# Add Shiki assets to build directory
+add_shiki_assets(joinpath(@__DIR__, "build"))
+
 {{#HAS_DEPLOY}}
 deploydocs(;
     repo="{{{REPO}}}",
