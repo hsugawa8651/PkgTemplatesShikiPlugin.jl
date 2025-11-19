@@ -23,6 +23,9 @@ jobs:
           - ubuntu-latest
           - macOS-latest
           - windows-latest
+        exclude:
+          - version: 'nightly'
+            os: macOS-latest  # Skip nightly on macOS (too slow)
     steps:
       - uses: actions/checkout@v5
 
