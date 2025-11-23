@@ -1,0 +1,448 @@
+/* Shiki Highlighter Plugin Styles */
+
+/* デフォルトのコードブロックスタイル（Shiki適用前） */
+pre code {
+    color: inherit !important;
+    background: transparent !important;
+}
+
+html.theme--dark pre code,
+html.theme--documenter-dark pre code {
+    color: #c9d1d9 !important;
+}
+
+.shiki-loading {
+    position: relative;
+    background: #f6f8fa;
+    border-radius: 6px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', 'Fira Code', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #e1e4e8;
+    margin: 1em 0;
+}
+
+.shiki-loading::after {
+    content: "⚡ Loading syntax highlighting...";
+    color: #666;
+    font-style: italic;
+    opacity: 0.7;
+    animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: 0.4; }
+    to { opacity: 0.8; }
+}
+
+pre.shiki {
+    background-color: transparent !important;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem !important;
+    overflow-x: clip;
+    overflow-y: visible;
+    font-family: 'JetBrains Mono', 'Fira Code', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #e1e4e8;
+    margin: 1em 0;
+    position: relative;
+}
+
+.shiki code {
+    background: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    font-weight: inherit;
+    color: inherit;
+    font-size: inherit;
+}
+
+.shiki pre {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    overflow: visible;
+    font-size: inherit;
+}
+
+/* ダークモード対応 */
+@media (prefers-color-scheme: dark) {
+    .shiki-loading {
+        background: #0d1117;
+        border-color: #30363d;
+        color: #c9d1d9;
+    }
+
+    .shiki {
+        border-color: #30363d;
+    }
+}
+
+/* Documenterテーマとの統合 */
+html.theme--dark .shiki-loading,
+html.theme--documenter-dark .shiki-loading {
+    background: #0d1117;
+    border-color: #30363d;
+    color: #c9d1d9;
+}
+
+html.theme--dark .shiki,
+html.theme--documenter-dark .shiki {
+    border-color: #30363d;
+}
+
+/* Shikiのテーマが提供する色をそのまま使用 - キーワードと数字はそのまま */
+/* 変数名（i, j等の通常の識別子）のみを上書き */
+
+/* ライトテーマ: 変数名を黒にする */
+html.theme--light .shiki span[style*="color:#383A42"],
+html.theme--light .shiki span[style*="color:#383a42"] {
+    color: #000000 !important;
+}
+
+/* ダークテーマ: 変数名を白にする */
+html.theme--dark .shiki span[style*="color:#383A42"],
+html.theme--dark .shiki span[style*="color:#383a42"],
+html.theme--documenter-dark .shiki span[style*="color:#383A42"],
+html.theme--documenter-dark .shiki span[style*="color:#383a42"] {
+    color: #ffffff !important;
+}
+
+/* ライトテーマで薄いテキストを濃くする */
+html.theme--light .shiki span[style*="color:#6F42C1"],
+html.theme--light .shiki span[style*="color:#6f42c1"] {
+    color: #5a32a3 !important;  /* より濃い紫 */
+}
+
+html.theme--light .shiki span[style*="color:#032F62"],
+html.theme--light .shiki span[style*="color:#032f62"] {
+    color: #022543 !important;  /* より濃い青 */
+}
+
+/* ライトテーマのコメントを濃くする */
+html.theme--light .shiki span[style*="color:#A0A1A7"],
+html.theme--light .shiki span[style*="color:#a0a1a7"],
+html.theme--light .shiki span[style*="color:#969896"],
+html.theme--light .shiki span[style*="color:#8E908C"] {
+    color: #5a5d62 !important;  /* より濃いグレー */
+}
+
+/* ライトテーマの薄いグレーテキストを濃くする */
+html.theme--light .shiki span[style*="color:#383A42"],
+html.theme--light .shiki span[style*="color:#383a42"] {
+    color: #000000 !important;  /* 完全な黒 */
+}
+
+/* ライトテーマの識別子（灰色のテキスト）をコメントと同じ濃さにする */
+html.theme--light .shiki span[style*="color:#959DA5"],
+html.theme--light .shiki span[style*="color:#959da5"],
+html.theme--light .shiki span[style*="color:#6A737D"],
+html.theme--light .shiki span[style*="color:#6a737d"] {
+    color: #5a5d62 !important;  /* コメントと同じ濃いグレー */
+}
+
+/* ライトテーマのデフォルト色の識別子も濃くする */
+html.theme--light .shiki span[style*="color:#24292E"],
+html.theme--light .shiki span[style*="color:#24292e"] {
+    color: #000000 !important;  /* 完全な黒 */
+}
+
+/* ライトテーマの変数名・関数名を濃くする */
+html.theme--light .shiki span[style*="color:#E45649"],
+html.theme--light .shiki span[style*="color:#e45649"] {
+    color: #d73a49 !important;  /* より濃い赤 */
+}
+
+html.theme--light .shiki span[style*="color:#4078F2"],
+html.theme--light .shiki span[style*="color:#4078f2"] {
+    color: #0366d6 !important;  /* より濃い青 */
+}
+
+/* ライトテーマの薄いピンク色を濃くする */
+html.theme--light .shiki span[style*="color:#F97583"],
+html.theme--light .shiki span[style*="color:#f97583"] {
+    color: #000000 !important;  /* 完全な黒（識別子） */
+}
+
+/* ライトテーマの薄い青を濃くする */
+html.theme--light .shiki span[style*="color:#79B8FF"],
+html.theme--light .shiki span[style*="color:#79b8ff"],
+html.theme--light .shiki span[style*="color:#79B8ff"] {
+    color: #000000 !important;  /* 完全な黒（識別子） */
+}
+
+/* ライトテーマの薄いグレーを濃くする */
+html.theme--light .shiki span[style*="color:#E1E4E8"],
+html.theme--light .shiki span[style*="color:#e1e4e8"],
+html.theme--light .shiki span[style*="color:#E1E4e8"] {
+    color: #000000 !important;  /* 完全な黒 */
+}
+
+/* ライトテーマの薄い緑を濃くする */
+html.theme--light .shiki span[style*="color:#85E89D"],
+html.theme--light .shiki span[style*="color:#85e89d"] {
+    color: #22863a !important;  /* 濃い緑 */
+}
+
+/* ライトテーマの薄い紫を濃くする（one-lightテーマ） */
+html.theme--light .shiki span[style*="color:#B392F0"],
+html.theme--light .shiki span[style*="color:#b392f0"] {
+    color: #6f42c1 !important;  /* 濃い紫 */
+}
+
+/* 行番号サポート */
+.shiki .line {
+    min-height: 1.5em;
+}
+
+/* スクロールバーのスタイリング */
+.shiki::-webkit-scrollbar {
+    height: 8px;
+}
+
+.shiki::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.shiki::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.2);
+    border-radius: 4px;
+}
+
+.shiki::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.3);
+}
+
+/* コピーボタン */
+.shiki .copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    z-index: 10;
+}
+
+.shiki:hover .copy-button {
+    opacity: 1;
+}
+
+.shiki .copy-button:hover {
+    background: rgba(255,255,255,1);
+}
+
+html.theme--dark .shiki .copy-button ,
+html.theme--documenter-dark .shiki .copy-button {
+    background: rgba(13,17,23,0.9);
+    border-color: #30363d;
+    color: #c9d1d9;
+}
+
+html.theme--dark .shiki .copy-button:hover ,
+html.theme--documenter-dark .shiki .copy-button:hover {
+    background: rgba(13,17,23,1);
+}
+
+/* ハイライト行のスタイル - レベル1 (黄色) */
+.shiki .highlighted,
+.shiki .line.highlighted,
+.shiki .highlight-level-1 {
+    background-color: rgba(255, 255, 0, 0.1);
+    display: inline-block;
+    position: relative;
+}
+
+.shiki .highlighted::before,
+.shiki .line.highlighted::before,
+.shiki .highlight-level-1::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 0, 0.1);
+    z-index: -1;
+}
+
+/* レベル2 (赤色) */
+.shiki .highlight-level-2 {
+    background-color: rgba(255, 100, 100, 0.15);
+    display: inline-block;
+    position: relative;
+}
+
+/* ハイライト行でも通常の文字色ルールを適用 */
+
+.shiki .highlight-level-2::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 100, 100, 0.15);
+    z-index: -1;
+}
+
+/* レベル3 (緑色) */
+.shiki .highlight-level-3 {
+    background-color: rgba(100, 255, 100, 0.15);
+    display: inline-block;
+    position: relative;
+}
+
+.shiki .highlight-level-3::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(100, 255, 100, 0.15);
+    z-index: -1;
+}
+
+/* レベル4 (青色) */
+.shiki .highlight-level-4 {
+    background-color: rgba(100, 150, 255, 0.15);
+    display: inline-block;
+    position: relative;
+}
+
+.shiki .highlight-level-4::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(100, 150, 255, 0.15);
+    z-index: -1;
+}
+
+/* ダークモードでのハイライト - 行全体の背景色変更 */
+html.theme--dark .shiki .highlighted,
+html.theme--dark .shiki .line.highlighted,
+html.theme--dark .shiki .highlight-level-1 ,
+html.theme--documenter-dark .shiki .highlight-level-1 {
+    /* レベル1: 黄色系 - 行全体に薄い背景色 */
+    background-color: rgba(255, 234, 0, 0.1);
+    display: inline-block;
+    position: relative;
+}
+
+html.theme--dark .shiki .highlighted::before,
+html.theme--dark .shiki .line.highlighted::before,
+html.theme--dark .shiki .highlight-level-1::before ,
+html.theme--documenter-dark .shiki .highlight-level-1::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 234, 0, 0.1);
+    z-index: -1;
+}
+
+/* ハイライト行でも通常の色ルールを使用（フィルタなし） */
+
+html.theme--dark .shiki .highlight-level-2 ,
+html.theme--documenter-dark .shiki .highlight-level-2 {
+    /* レベル2: 赤系 - 行全体に薄い背景色 */
+    background-color: rgba(255, 95, 109, 0.1);
+    display: inline-block;
+    position: relative;
+}
+
+html.theme--dark .shiki .highlight-level-2::before ,
+html.theme--documenter-dark .shiki .highlight-level-2::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(255, 95, 109, 0.1);
+    z-index: -1;
+}
+
+
+html.theme--dark .shiki .highlight-level-3 ,
+html.theme--documenter-dark .shiki .highlight-level-3 {
+    /* レベル3: 緑系 - 行全体に薄い背景色 */
+    background-color: rgba(95, 255, 135, 0.1);
+    display: inline-block;
+    position: relative;
+}
+
+html.theme--dark .shiki .highlight-level-3::before ,
+html.theme--documenter-dark .shiki .highlight-level-3::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(95, 255, 135, 0.1);
+    z-index: -1;
+}
+
+
+html.theme--dark .shiki .highlight-level-4 ,
+html.theme--documenter-dark .shiki .highlight-level-4 {
+    /* レベル4: 青系 - 行全体に薄い背景色 */
+    background-color: rgba(100, 181, 255, 0.1);
+    display: inline-block;
+    position: relative;
+}
+
+html.theme--dark .shiki .highlight-level-4::before ,
+html.theme--documenter-dark .shiki .highlight-level-4::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(100, 181, 255, 0.1);
+    z-index: -1;
+}
+
+
+/* 差分表示のスタイル（オプション） */
+.shiki .diff.add {
+    background-color: rgba(46, 160, 67, 0.15);
+}
+
+.shiki .diff.remove {
+    background-color: rgba(248, 81, 73, 0.15);
+}
+
+html.theme--dark .shiki .diff.add ,
+html.theme--documenter-dark .shiki .diff.add {
+    background-color: rgba(46, 160, 67, 0.2);
+}
+
+html.theme--dark .shiki .diff.remove ,
+html.theme--documenter-dark .shiki .diff.remove {
+    background-color: rgba(248, 81, 73, 0.2);
+}
+
+/* Catppuccinテーマを設定メニューから隠す */
+#documenter-themepicker option[value="catppuccin-latte"],
+#documenter-themepicker option[value="catppuccin-frappe"],
+#documenter-themepicker option[value="catppuccin-macchiato"],
+#documenter-themepicker option[value="catppuccin-mocha"] {
+    display: none;
+}
