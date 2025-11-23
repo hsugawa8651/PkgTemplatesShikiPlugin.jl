@@ -169,11 +169,12 @@ html.theme--documenter-dark pre code {
     to { opacity: 0.8; }
 }
 
-.shiki {
+pre.shiki {
     background-color: transparent !important;
     border-radius: 6px;
-    padding: 16px;
-    overflow-x: auto;
+    padding: 0.5rem 0.75rem !important;
+    overflow-x: clip;
+    overflow-y: visible;
     font-family: 'JetBrains Mono', 'Fira Code', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
     font-size: 14px;
     line-height: 1.5;
@@ -390,7 +391,6 @@ html.theme--documenter-dark .shiki .copy-button:hover {
 .shiki .highlight-level-1 {
     background-color: rgba(255, 255, 0, 0.1);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -411,7 +411,6 @@ html.theme--documenter-dark .shiki .copy-button:hover {
 .shiki .highlight-level-2 {
     background-color: rgba(255, 100, 100, 0.15);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -432,7 +431,6 @@ html.theme--documenter-dark .shiki .copy-button:hover {
 .shiki .highlight-level-3 {
     background-color: rgba(100, 255, 100, 0.15);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -451,7 +449,6 @@ html.theme--documenter-dark .shiki .copy-button:hover {
 .shiki .highlight-level-4 {
     background-color: rgba(100, 150, 255, 0.15);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -474,7 +471,6 @@ html.theme--documenter-dark .shiki .highlight-level-1 {
     /* レベル1: 黄色系 - 行全体に薄い背景色 */
     background-color: rgba(255, 234, 0, 0.1);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -499,7 +495,6 @@ html.theme--documenter-dark .shiki .highlight-level-2 {
     /* レベル2: 赤系 - 行全体に薄い背景色 */
     background-color: rgba(255, 95, 109, 0.1);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -521,7 +516,6 @@ html.theme--documenter-dark .shiki .highlight-level-3 {
     /* レベル3: 緑系 - 行全体に薄い背景色 */
     background-color: rgba(95, 255, 135, 0.1);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
@@ -543,7 +537,6 @@ html.theme--documenter-dark .shiki .highlight-level-4 {
     /* レベル4: 青系 - 行全体に薄い背景色 */
     background-color: rgba(100, 181, 255, 0.1);
     display: inline-block;
-    width: 100%;
     position: relative;
 }
 
