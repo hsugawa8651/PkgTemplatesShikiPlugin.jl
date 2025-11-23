@@ -189,7 +189,7 @@ using PkgTemplatesShikiPlugin: NoDeploy
 
             # Verify package.json is valid JSON-like
             pkg_json = read(joinpath(pkg_dir, "package.json"), String)
-            @test occursin("documenter-shiki", pkg_json)
+            @test occursin("TestPkg-docs", pkg_json)
             @test occursin("shiki", pkg_json)
         end
     end
