@@ -106,7 +106,7 @@ julia --project=docs docs/make.jl
 
 ## Live Examples
 
-To see Shiki syntax highlighting in action with various themes and languages, visit the [DocumenterShikiDemo](https://hsugawa8651.github.io/DocumenterShikiDemo/) showcase.
+To see Shiki syntax highlighting in action with various themes and languages, visit the [DocumenterShikiDemo](https://hsugawa8651.github.io/DocumenterShikiDemo.jl/dev/) showcase.
 
 The demo includes:
 - Interactive theme switching
