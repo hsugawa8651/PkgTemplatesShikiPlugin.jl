@@ -233,9 +233,10 @@ function hook(p::DocumenterShiki{T}, t::Template, pkg_dir::AbstractString) where
         gen_file(joinpath(workflows_dir, "Documentation.yml"), doc_yml_text)
     end
 
-    # Generate package.json
-    pkg_json = generate_package_json(p)
-    gen_file(joinpath(pkg_dir, "package.json"), pkg_json)
+    # Generate package.json from template
+    pkg_json_path = template_file("documenter_shiki", "package.json")
+    pkg_json_text = render_file(pkg_json_path, vars, tags(p))
+    gen_file(joinpath(pkg_dir, "package.json"), pkg_json_text)
 
     # Generate build-shiki.js
     build_script = generate_build_script(p)
