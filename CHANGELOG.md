@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2025-11-17
+## [0.1.2] - 2025-11-23
+
+### Changed
+- Replace all Japanese comments with English in ShikiHighlighter.jl and template
+- Update ShikiHighlighter template with DocumenterShiki improvements
+  - CSS improvements: `overflow-x: clip`, better padding (`0.5rem 0.75rem`)
+  - Better horizontal scrollbar handling
+- Change package.json template to use package-specific naming (`{{{PKG}}}-docs`)
+
+### Added
+- Add package.json template for Node.js dependency management
+
+### Fixed
+- Update test to match new package.json naming scheme
+
+## [0.1.1] - 2025-11-23
+
+### Fixed
+- Fix documentation URL in Project.toml
+- Remove horizontal scrollbar from code blocks
+
+## [0.1.0] - 2025-11-19
 
 ### Added
 - Initial release
