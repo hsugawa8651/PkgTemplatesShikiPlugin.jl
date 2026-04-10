@@ -1013,6 +1013,12 @@ function generate_shiki_javascript(config)
                 };
                 shikiPre.appendChild(copyButton);
 
+                // Copy saved data attributes to new element
+                shikiPre.dataset.originalCode = pre.dataset.originalCode;
+                if (pre.dataset.originalLang) {
+                    shikiPre.dataset.originalLang = pre.dataset.originalLang;
+                }
+
                 // Replace original element
                 const parentPre = codeBlock.closest('pre');
                 if (parentPre) {
@@ -1076,37 +1082,48 @@ function generate_shiki_javascript(config)
         }
     }
 
+    // Re-highlight all existing Shiki blocks with current theme
+    async function rehighlightAllBlocks() {
+        const blocks = document.querySelectorAll('pre.shiki');
+        if (blocks.length === 0) return;
+
+        // Reset highlighter so it reloads with new theme
+        shikiHighlighter = null;
+        isLoading = false;
+        loadingPromise = null;
+
+        for (const pre of blocks) {
+            if (!pre.dataset.originalCode || !pre.dataset.originalLang) continue;
+
+            // Restore a temporary code element for highlightCodeBlock
+            const tempCode = document.createElement('code');
+            tempCode.className = pre.dataset.originalLang;
+            tempCode.textContent = pre.dataset.originalCode;
+
+            // Remove shiki class so highlightCodeBlock processes it
+            pre.className = '';
+            pre.removeAttribute('style');
+            pre.innerHTML = '';
+            pre.appendChild(tempCode);
+
+            await highlightCodeBlock(tempCode);
+        }
+    }
+
     // Monitor theme changes
     function observeThemeChanges() {
+        let themeChangeTimeout = null;
+
         const observer = new MutationObserver(async (mutations) => {
             for (const mutation of mutations) {
                 if (mutation.type === 'attributes' &&
                     (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
-                    console.log('🎨 Theme changed, re-highlighting...');
-
-                    // Reset Highlighter instance
-                    highlighterInstance = null;
-
-                    // Restore existing Shiki blocks to original state
-                    const blocks = document.querySelectorAll('pre.shiki');
-                    for (const pre of blocks) {
-                        const codeElement = pre.querySelector('code');
-                        if (codeElement && pre.dataset.originalCode) {
-                            // Restore original code
-                            codeElement.textContent = pre.dataset.originalCode;
-                            // Remove Shiki class to allow reprocessing
-                            pre.classList.remove('shiki');
-                            // Keep original class
-                            const langClass = pre.dataset.originalLang;
-                            if (langClass && !codeElement.classList.contains(langClass)) {
-                                codeElement.classList.add(langClass);
-                            }
-                        }
-                    }
-
-                    // Wait a bit then re-highlight
-                    await new Promise(resolve => setTimeout(resolve, 200));
-                    await highlightAllCodeBlocks();
+                    // Debounce to avoid multiple rapid re-highlights
+                    if (themeChangeTimeout) clearTimeout(themeChangeTimeout);
+                    themeChangeTimeout = setTimeout(async () => {
+                        console.log('🎨 Theme changed, re-highlighting...');
+                        await rehighlightAllBlocks();
+                    }, 300);
                     break;
                 }
             }
@@ -1120,30 +1137,7 @@ function generate_shiki_javascript(config)
         // Also monitor prefers-color-scheme changes
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', async () => {
             console.log('🌙 System theme changed, re-highlighting...');
-
-            // Reset Highlighter instance
-            highlighterInstance = null;
-
-            // Restore existing Shiki blocks to original state
-            const blocks = document.querySelectorAll('pre.shiki');
-            for (const pre of blocks) {
-                const codeElement = pre.querySelector('code');
-                if (codeElement && pre.dataset.originalCode) {
-                    // Restore original code
-                    codeElement.textContent = pre.dataset.originalCode;
-                    // Remove Shiki class to allow reprocessing
-                    pre.classList.remove('shiki');
-                    // Keep original class
-                    const langClass = pre.dataset.originalLang;
-                    if (langClass && !codeElement.classList.contains(langClass)) {
-                        codeElement.classList.add(langClass);
-                    }
-                }
-            }
-
-            // Wait a bit then re-highlight
-            await new Promise(resolve => setTimeout(resolve, 200));
-            await highlightAllCodeBlocks();
+            await rehighlightAllBlocks();
         });
     }
 
