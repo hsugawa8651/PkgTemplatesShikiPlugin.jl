@@ -18,7 +18,7 @@ jobs:
       - uses: julia-actions/setup-julia@v2
         with:
           version: '1'
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: 9
           run_install: false
